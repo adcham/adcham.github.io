@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <script src="JS/script.js"></script>
+    <script src="https://kit.fontawesome.com/44d61e00dc.js" crossorigin="anonymous"></script>
+    <!-- <audio id="gameAudio" src="./SOUND/backgroundNoise.mp3" ></audio> -->
+</head>
+ <!--
+##############################
+Top Menu
+##############################
+ --> 
+<body>
+<div id="wrapper">
+     <!--
+    <div class="show-bet-tokens">
+        <div class="small-25-btn">25</div>
+        <div class="small-50-btn">50</div>
+        <div class="small-75-btn">75</div>
+        <div class="small-100-btn">100</div>
+    </div>
+     -->
+    <div class="top-nav" id="this-top-nav">
+        
+        <img src="./CSS/skybet-50pxheight.png" class="nav-logo" alt="Return to skybet" onclick="redirectToSkyBet()">
+        <div class="nav-right">        
+                <button class="settings-menu-btn">
+                   <h3>Settings</h3>
+                </button>
+                <div class="settings-menu">
+                    <a href="#" onclick="blackjackGame.resetLocalData()">Reset Bank Balance</a>
+                    <a href="#" onclick="tutorialMode()">Tips & Tricks</a>
+                    <a href="#" onclick="rulesMode()">View Rules</a>
+                    <a href="#" onclick="blackjackGame.toggleTipsPopUp()">Toggle tip popups <span id="toggleTipsOnOrOffText">off</span></a>
+                    <a href="index.html">Return to Home Page</a>
+                </div>
+        </div> 
+    </div>
+     <!--
+##############################
+Main Overlay
+##############################
+ --> 
+    <div id="overlay">
+            <!-- <a href="#home"><img src="css/skybet.png" alt="Return to skybet" width="100" height="25"></a> -->
+        <div class="container">
+            <button id="start-button" button class="start-control-btn button" onclick="startGame()">
+                <h3>New Game</h3>
+            </button> 
+        </div>
+        <div class="container">
+            <button id="rules-button"button class="start-control-btn button" onclick="rulesMode()">
+                <h3>Rules of Blackjack</h3>
+            </button> 
+        </div> 
+        <div class="container">
+            <button id="tutorial-button"button class="start-control-btn button" onclick="tutorialMode()">
+                <h3>Tips and Tricks</h3>
+            </button> 
+        </div>     
+
+    </div>
+ <!--
+##############################
+Main Game Code
+##############################
+ -->   
+    <div class="dealer-hand-show">
+        <h2 id="dealer-text"></h2>
+        <div class="card-deck" id="dealersHand">
+        </div>
+    </div>
+  <!--
+##############################
+Player Card Deck
+##############################
+ -->    
+    <div class="player-hand-show">
+        <h2></h2>
+        <div class="card-deck">
+            <div id="playersHand">
+            </div>
+            <div id="playersHand2"></div>
+        </div>
+    </div>
+ <!--
+##############################
+Player Control Buttons
+##############################
+ --> 
+ 
+ <div id="bet-amount-container">
+    <div class="bet-amount">
+        Current Bet  <span>£</span><span id="current-bet-amount"></span>
+    </div>
+</div>
+
+ <div class="player-controls" id="bettingControls">
+    <div class="player-control-btns">
+        <button id="25-btn" class="control-btn-25 button" onclick="blackjackGame.add25ToBet()">25</button>
+        <button id="50-btn" class="control-btn-50 button" onclick="blackjackGame.add50ToBet()">50</button>
+        <button id="75-btn" class="control-btn-75 button" onclick="blackjackGame.add75ToBet()">75</button>
+        <button id="100-btn" class="control-btn-100 button" onclick="blackjackGame.add100ToBet()">100</button>
+
+        <button id="bet-btn" class="control-btn-bet button" onclick="blackjackGame.placeBet()">
+            <h3>Press to bet</h3> <h3 id="currentBetAmountH3"></h3>
+        </button>
+    </div>
+</div>
+ <!--
+##############################
+Player Control Buttons
+##############################
+ --> 
+    <div class="player-controls" id="actionControls">
+        <div class="player-control-btns">
+            
+            <button id="hit-btn" class="control-btn-hit button" onclick="blackjackGame.hit()">
+                <h3>Hit</h3>
+            </button>
+            <button id="stand-btn" class="control-btn-stand button" onclick="blackjackGame.stand()">
+                <h3>Stand</h3>
+            </button>
+            <button id="double-btn" class="control-btn-double button" onclick="blackjackGame.doubleDown()">
+                <h3>Double</h3>
+            </button>
+            <button id="split-btn" class="control-btn-split button" onclick="blackjackGame.playerSplits()">
+                <h3>Split</h3>
+            </button>
+            <button id="insurance-btn" class="control-btn-insurance button" onclick="blackjackGame.takeInsurance()">
+                <h3>Insurance</h3>
+            </button>
+
+        </div>
+    </div>
+    <div id="status-popup">
+        <div class="popup-container">
+            <h1>It looks like you're connected...</h1>
+            <button id="keep-playing-button" button class="popup-btn popup-btn-red" onclick="hideRedirectPopUp()">
+                <h3>Return to game</h3>
+            </button>
+            <button id="return-button" button class="popup-btn popup-btn-green" onclick="redirectToSkyBet()">
+                <h3>Take me to Sky Bet</h3>
+            </button>
+            <h2>Do not remind me again <input type="checkbox" id="remind-checkbox" onclick="setRemindMeAboutRedirect()"></h2>
+        </div>
+    </div>
+    <div id="resultsBox" onclick="blackjackGame. playerClicksOffResultsPopUp()">
+        <div class="results-container">
+            <h1 id="results-text"></h1>
+            <h3>Press anywhere to continue</h3>
+        </div>
+    </div>
+</div>
+
+<div id="insurance-taken-visual-indicator"><h1>Insurance Taken</h1></div>
+
+<audio id="gameSound">
+    <source src="./SOUND/backgroundNoise.mp3" type="audio/mpeg"> 
+</audio>
+
+<div id="bankroll-container">
+    <div class="bankroll-button"> 
+        <h3>Bankroll</h3>
+        <span>£</span><span id="current-bank-roll"></span>
+    </div>
+</div>
+
+<button id="sound-button" class="sound-control-btn button" onclick="toggleSound()">
+    <img id="sound-button-img" src="./CSS/pinkSoundOn.png" alt="Sound" width="40" height="40">
+</button>
+
+
+
+    </div> 
+
+    <div class="popup" id="tip-popup-window">
+        <span class="popuptext" id="tipPopup"></span>
+    </div>
+
+
+<!-- #########       ###################
+Tutorial Mode 
+############################ -->
+<div id="tips-blur">
+    <div id="tips-container">
+        <div class="tip-header">
+            <h1>Tips and Tricks</h1>
+            <button id="exit-tutorial-button" type="button" onclick="exitPage()">X</button>
+        </div>
+        <div id="tipsLeft">
+            <h2>Do's</h2>
+            <ul class="dos-list">
+                <li>Double down on a hard 11</li>
+                <li>Split a pair of As or 8s</li>
+                <li>Always hit when you have Ace-7 (soft 18) when the dealer’s up card is a 9, 10 or an ace</li>
+                <li>Always double down on 10 when the dealer's hand is 9 or less</li>
+                <li>Double down Ace-2 to Ace-7 when the dealers up card is a 5 or 6</li>
+                <li>Always stand with a pair of 9s when the dealer’s up card is a 7</li>
+                <li>Double down on 8 when the dealer’s up card is 5 or 6</li>
+                <li>If you have a pair of 2s or 3s, and the dealer has a 2 or 3 up card, split</li>
+                <li>Stand on a hard 16 if the dealer’s up card is 10</li>
+                <li>Stand when your hand is 12-16 when the dealer has 2-6</li>
+                <li>Hit when your hand is 12-16 when the dealer has 7-Ace or higher</li>
+                <li>Double 11 versus the dealer's 2-10</li>
+                <li>Take a hit with an 11 or less</li>
+            </ul>
+        </div>
+
+        <div id="tipsRight">
+            <h2>Dont's</h2>
+            <ul class="donts-list">
+                <li>Don’t split on a pair of 5s, 10s Js, Qs or Ks</li>
+                <li>Avoid using insurance</li> 
+                <li>Don’t take any more hits with a soft 19</li>
+            </ul>
+        </div>
+        <br style="clear:both;"/>
+    </div>
+</div>
+
+<div id="rules-blur">
+    <div id="rules-container">
+    
+        <button id="exit-rules-button" type="button" onclick="exitRulesPage()">X</button>
+        <h1>Basic Rules of Blackjack</h1>
+        <div id="rulesList">
+            <ol class="rules-list">
+                <li>Blackjack starts with players making bets.</li>
+                <li>Dealer deals 2 cards to the players and two to himself (1 card face up, the other face down)</li>
+                <li>Blackjack card values: All cards count their face value in blackjack. Picture cards count as 10 and the ace can count as either 1 or 11. Card suits have no meaning in blackjack. The total of any hand is the sum of the card values in the hand</li>
+                <li>Players must decide whether to stand, hit, surrender, double down, or split</li>
+                <li>The dealer acts last and must hit on 16 or less and stand on 17 through 21</li>
+                <li>Players win when their hand totals higher than dealer’s hand, or they have 21 or less when the dealer busts (i.e., exceeds 21). The payoff is 1 to 1 (i.e., even money)</li>
+                <li>Players lose their bet when they bust, or when their hand totals less than the dealer’s hand</li>
+                <li>If the player’s and dealer’s hands total the same (known as a tie or push), the player retains his bet</li>
+            </ol>
+        </div>
+        <br style="clear:both;"/>
+    </div>
+</div>
+
+
+
+
+
+<!-- ##############################
+Scripts and stuff
+##############################
+ --> 
+    <script>
+        function menuFunction() {
+            var x = document.getElementById("settings-menu");
+                if (x.style.display === "block") {
+                     x.style.display = "none";
+            } else {
+                 x.style.display = "block";
+             }
+            }
+        function testFunc() {
+         var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+}
+
+
+
+    </script>
+    </body>
+</html>

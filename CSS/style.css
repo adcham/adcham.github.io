@@ -1,0 +1,989 @@
+body
+{
+    font-family: "Brush Script MT", Arial, sans-serif;
+    font-size: 18px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+  html { 
+    background: url(bg.png) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+
+   /* 
+##############################
+Game Overlay
+##############################
+*/
+
+#overlay {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(bg.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: 2;
+  }
+
+.container {
+    position: relative;
+    top: 50%;
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: whitesmoke;
+}
+
+.popup-container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: auto;
+    width: 40%;
+    padding: 2%;
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+    color: #333333;
+    background-color: white;
+    box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.75);
+    z-index: 100;
+}
+
+.popup-container h1 {
+    margin-block-start: 0em;
+    font-weight: normal;
+    background: -webkit-linear-gradient(left, #002A91 0,#002A91 20%,#8C1E6E 50%,#D42321 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.popup-container h2 {
+    font-weight: normal;
+    font-size: 0.8rem;
+    
+    margin-bottom: -1%;
+    padding: 0;
+    padding-top: 20px;
+    text-align: right;
+}
+
+
+#status-popup {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color: rgba(0,0,0,0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+#resultsBox {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.results-container {
+    position: relative;
+    top: 35%;
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: whitesmoke;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,0) 10%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0) 90%);
+}
+
+.results-container h1, .results-container h3 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+}
+
+.results-container h3 {
+    font-size: 1em;
+}
+  /* 
+##############################
+Menu Function
+##############################
+*/
+  .top-nav {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px; 
+  }
+  
+  .nav-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 5px;
+    margin-top: 5px;
+  }
+  
+  .bankroll-button {
+    text-align: center;
+    color: rgb(255, 234, 45);
+    background-color: #237901;
+    border: 3px solid #B89E4B;
+    font-size: 2em;
+    padding: 10px;
+  }
+
+  #bankroll-container h3 {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      font-weight: normal;
+      color: cornsilk;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+  }
+  
+  #bankroll-container {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    min-width: 13%;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+  
+ .nav-right {
+     position: absolute;
+     top: 0;
+     right: 0;
+     margin-right: 5px;
+     margin-top: 5px;
+ }
+  .settings-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 170px;
+    background-color: #237901;
+    border-radius: 2px;
+    border: 1px solid #B89E4B;
+    /* box-shadow: 5px 5px 3px black; */
+  }
+  
+  .settings-menu a {
+    color: cornsilk;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 12px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: block;
+  }
+  
+  .settings-menu a:hover {background-color: #AB2727;}
+  
+  .nav-right:hover .settings-menu {
+    display: block;
+  }
+  
+  .settings-menu-btn {
+    color: cornsilk;
+    background-color: #237901;
+    border-radius: 2px;
+    height: 50px;
+    border: 1px solid #B89E4B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    /* box-shadow: 5px 5px 3px black; */
+
+  }
+
+/* 
+##############################
+Dealer Deck
+##############################
+*/
+
+
+.dealer-hand-show {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 
+##############################
+Card Deck
+##############################
+*/
+
+.card-deck {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+    padding:0;
+}
+
+.card-show {
+    background-color: #ffffff;
+    height: 200px;
+    width: 125px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    border-radius: 2px;
+    box-shadow: 5px 5px 3px;
+}
+
+.padding-card{
+    background-color: none;
+    width: 0;
+    margin: 10px;
+    height: 200px;
+    display: flex;
+    visibility: hidden;
+}
+
+
+.card-is-red {
+    color: red;
+}
+
+#dealers-hidden-card {
+    background-color: #460008;
+    height: 200px;
+    width: 125px;
+    margin: 10px;
+    color: #2b0106;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 2px;
+    box-shadow: 5px 5px 3px #270005;
+}
+
+#dealers-hidden-card span {
+    visibility: hidden;
+}
+
+.card-topleft {
+  position: absolute;
+  top: 0.5em;
+  left: 0.75em;
+}
+.card-bottomright {
+  position: absolute;
+  bottom: 0.5em;
+  right: 0.75em;
+  transform: rotate(180deg);
+}
+.card-corner-rank, .card-corner-suit {
+  width: 1em;
+  text-align: center;
+  transform: translate(-50%, 0);
+}
+
+.card-suits {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 17.5%;
+    height: 25%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .card-suit {
+    font-size: 1em;
+    position: absolute;
+  }
+  
+  .card-suit.mirrored {
+    transform: rotate(180deg);
+  }
+
+/* 
+##############################
+Start Game Control Button..etc
+##############################
+*/
+
+.begin-game {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 
+##############################
+Player Deck
+##############################
+*/
+
+.player-hand-show {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;   
+}
+
+.player-controls {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+
+#bet-amount-container {
+}
+
+.bet-amount {
+    background-color: #237901;
+    font-family: Helvetica;
+    color: whitesmoke;
+    border: 1px solid #B89E4B;
+    padding: 10px;
+    text-align: center;
+    font-size: 1em;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    display: table;
+    min-width: 16%;
+}
+
+@media only screen and (max-width: 600px) {
+    .bet-amount {
+        max-width: 30%;
+    }
+  }
+
+.bet-amount span {
+    color: rgb(255, 234, 45);
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.bet-amount h3 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+/* 
+##############################
+Player Action Control Buttons
+##############################
+*/
+
+.control-btn-hit {
+    height: 50px;
+    width: 180px;
+    margin-top: 5px;
+    color: cornsilk;
+    background-color: #237901;
+    border-radius: 2px;
+    border: 3px solid #B89E4B;
+    box-shadow: 5px 5px 3px black;
+}
+
+.control-btn-stand {
+    height: 50px;
+    width: 180px;
+    background-color: #750DD2;
+    margin-top: 5px;
+    color: cornsilk;
+    border-radius: 2px;
+    border: 3px solid #B89E4B;
+    box-shadow: 5px 5px 3px black;
+}
+
+.control-btn-double {
+    height: 50px;
+    width: 180px;
+    background-color: #1F1611;
+    margin-top: 5px;
+    color: cornsilk;
+    border-radius: 2px;
+    border: 3px solid #B89E4B;
+    box-shadow: 5px 5px 3px black;
+}
+
+.control-btn-split {
+    height: 50px;
+    width: 180px;
+    background-color: #460008;
+    margin-top: 5px;
+    color: cornsilk;
+    border-radius: 2px;
+    border: 3px solid #B89E4B;
+    box-shadow: 5px 5px 3px black;
+}
+
+.control-btn-insurance {
+    height: 50px;
+    width: 180px;
+    background-color: #FF5733;
+    margin-top: 5px;
+    color: cornsilk;
+    border-radius: 2px;
+    border: 3px solid #B89E4B;
+    box-shadow: 5px 5px 3px black;
+    display: none;
+}
+
+.start-control-btn {
+    height: 50px;
+    width: 180px;
+    color: black;
+    background-color: #FF69B4;
+    border-radius: 2px;
+    border: 3px solid #FF69B4;
+    box-shadow: 5px 5px 3px black;
+}
+
+
+/* 
+##############################
+Player Betting Control Buttons
+##############################
+*/
+
+.control-btn-25, .control-btn-50, .control-btn-75, .control-btn-100 {
+    font-family: Helvetica;
+    font-size: 1em;
+    text-align: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.control-btn-25 {
+    height: 75px;
+    width: 75px;
+    background-color: #12894D;
+    color: black;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+}
+
+.control-btn-50 {
+    height: 75px;
+    width: 75px;
+    background-color: #E6C146;
+    color: black;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+}
+
+.control-btn-75 {
+    height: 75px;
+    width: 75px;
+    background-color: #4d6dff;
+    color: black;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+}
+
+.control-btn-100 {
+    height: 75px;
+    width: 75px;
+    background-color: #FF69B4;
+    color: black;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+}
+
+
+.control-btn-bet {
+    height: 50px;
+    width: 180px;
+    background-color: #AB2727;
+    color: cornsilk;
+    border-radius: 2px;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+    margin-left: 10px;
+}
+
+.balance-amount {
+    width: 180px;
+    height: 50px;
+    background-color: black;
+    color: cornsilk;
+    border-radius: 2px;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+    margin-right: 10px;
+}
+
+/* 
+##############################
+Button decorations
+##############################
+*/
+
+.button {
+    transition-duration: 0.4s;
+    cursor: pointer;
+    transition: transform .2s;
+    outline:none;
+}
+
+.button:hover {
+    -ms-transform: scale(1.2); /* IE 9 */
+    -webkit-transform: scale(1.2); /* Safari 3-8 */
+    transform: scale(1.2); 
+}
+
+.button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#actionControls {
+    display: none;
+}
+
+#bettingControls {
+    display: none;
+}
+
+#bet-btn h3 {
+    display:inline;
+}
+
+#double-btn {
+    display: none;
+}
+
+#split-btn {
+    display: none;
+}
+
+/* pop-up styles */
+
+.popup-btn {
+    width: 180px;
+    color: #111;
+    font-size: 12px;
+    border: 1px solid #222;
+    font-weight: none;
+    border-radius: 0;
+}
+
+.popup-btn:hover {
+    border: 1px solid black;
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%);
+}
+
+.sound-control-btn {
+    background-color: transparent;
+}
+
+#sound-button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-color: transparent;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+
+#insurance-taken-visual-indicator {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    border: 5px solid white;
+    background-color: rgba(0,0,0,0.8);
+    padding: 10px;
+    margin: auto;
+}
+
+#insurance-taken-visual-indicator h1 {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+/* pop-up style styles */
+
+#tip-popup-window {
+    display: none;
+}
+
+.popup {
+    position: absolute;
+    top: 12%;
+    left: 5%;
+    /* display: inline-block; */
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+.popup .popuptext {
+    visibility: show;
+    width: 160px;
+    background-color: #237901;
+    color: cornsilk;
+    text-align: center;
+    border-radius: 6px;
+    border-bottom-color: #E6C146;
+    padding: 8px 0;
+    position: absolute;
+    font-family: Arial, Helvetica, sans-serif;
+    box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.863);
+  }
+
+  .popup .popuptext::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-bottom-color: #E6C146;
+	border-top: 0;
+	border-left: 0;
+	margin-left: -10px;
+	margin-top: -20px;
+  }
+
+  .show {
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+
+/* pop-up animation */
+
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  }
+
+  @-webkit-keyframes fadeOut {
+    from {opacity: 1;} 
+    to {opacity: 0;}
+  }
+  
+  @keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+  }
+
+.active-hand {
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 5px;
+}
+
+
+/* tutorial mode */
+
+
+#tips{
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    position: absolute;
+    text-align: center;
+    font-size: 16;
+}
+
+#tips-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    border: 1px solid black;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+#tips-header button{
+    border: 0;
+    background: transparent;
+}
+
+#tips-container h1 {
+    font-weight: normal;
+    background: -webkit-linear-gradient(left, #002A91 0,#002A91 20%,#8C1E6E 50%,#D42321 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#tips-container h2 {
+    font-weight: normal;
+    background: -webkit-linear-gradient(left, #002A91 0,#002A91 20%,#8C1E6E 50%,#D42321 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+#tips-blur {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    font-family: Helvetica;
+}
+
+#tipsLeft {
+    flex: 50%;
+    justify-content: center;
+    text-align: left;
+    
+}
+
+#tipsRight {
+    flex: 50%;
+    text-align: left;
+}
+
+.tip-header {
+    flex: 100%;
+}
+
+@media (max-width: 800px) {
+    #tipsLeft, #tipsRight, .tip-header  {
+      flex: 100%;
+    }
+    #tips-container {
+        position: absolute;
+        border: none;
+        font-size: 14px;
+    }
+  }
+
+  @media (min-width: 800px) {
+    #tips-container {
+        position: absolute;
+    }
+  }
+
+
+#exit-tutorial-button {
+    position: absolute;
+    right: 0%;
+    top: 0%;
+    border: none;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: none;
+}
+
+#exit-tutorial-button:hover {
+    color: black;
+}
+
+
+/* Rules Page */
+
+#rulesList{
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    text-align: left;
+    margin-bottom: 2em;
+}
+
+
+#rules-container {
+    display: block;
+    position: absolute;
+    margin: auto;
+    top: 10%;
+    left:10%;
+    right: 10%;
+    border: 1px solid black;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    
+}
+
+#rules-container h1 {
+    font-weight: normal;
+    background: -webkit-linear-gradient(left, #002A91 0,#002A91 20%,#8C1E6E 50%,#D42321 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#rules-blur {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    font-family: Helvetica;
+}
+
+
+#exit-rules-button {
+    float: right;
+    border: none;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: none;
+    color: rgb(61, 61, 61);
+    font-family: arial;
+}
+
+#exit-rules-button:hover {
+    color: black;
+}
+
+/* More Betting Controls */
+
+.show-bet-tokens {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    text-align: center;
+}
+.small-25-btn {
+    height: 75px;
+    width: 75px;
+    background-color: #12894D;
+    color: black;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+}
+
+.small-50-btn {
+    height: 75px;
+    width: 75px;
+    background-color: #E6C146;
+    color: black;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+}
+
+.small-75-btn {
+    height: 75px;
+    width: 75px;
+    background-color: #1D2E77;
+    color: black;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+}
+
+.small-100-btn {
+    height: 75px;
+    width: 75px;
+    background-color: #FF69B4;
+    color: black;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-shadow: 5px 5px 3px black;
+}
+
+
+#insurance-taken-visual-indicator {
+    visibility: hidden;
+}
+
+#playersHand {
+    display: flex;
+}
+
+#playersHand2 {
+    display: none;
+    margin-left:10%;
+}
+
+@media screen and (max-width: 800px) {
+    .card-show, .padding-card {
+        height: 100px;
+        width: 62.5px;
+        font-size: 2em;
+    }
+    #dealers-hidden-card {
+        height: 100px;
+        width: 62.5px;
+        font-size: 2em;
+    }
+    
+    #wrapper {
+        width: 100%;
+        height: 100%;
+    }
+
+  }
+
+.dealer-hand-show h2, .player-hand-show h2 {
+      font-weight: 800;
+      font-size: 3em;
+      color: rgba(0, 0, 0, 0.3);
+      padding-bottom: 0;
+      margin-bottom: 0;
+  }
